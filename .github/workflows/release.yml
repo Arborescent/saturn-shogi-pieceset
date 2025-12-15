@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install Pillow
+
+      - name: Generate pieces
+        run: python src/main.py
+
+      - name: Create zip archive
+        run: zip -j saturn-shogi-pieceset.zip build/*
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: saturn-shogi-pieceset.zip
