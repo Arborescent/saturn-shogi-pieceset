@@ -1,0 +1,4 @@
+Pillow
+pyright
+ruff
+pre-commit
