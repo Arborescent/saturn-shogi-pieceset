@@ -28,11 +28,23 @@ jobs:
       - name: Generate pieces
         run: python src/main.py
 
-      - name: Create zip archive
-        run: zip -j saturn-shogi-pieceset.zip build/*
+      - name: Create full size zip
+        run: zip -j saturn-shogi-pieceset-full.zip build/*
+
+      - name: Create 256px resized pieces
+        run: |
+          mkdir -p build-256
+          for f in build/*.png; do
+            convert "$f" -resize 256x "build-256/$(basename "$f")"
+          done
+
+      - name: Create 256px zip
+        run: zip -j saturn-shogi-pieceset-256.zip build-256/*
 
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.tag || github.ref_name }}
-          files: saturn-shogi-pieceset.zip
+          files: |
+            saturn-shogi-pieceset-full.zip
+            saturn-shogi-pieceset-256.zip
