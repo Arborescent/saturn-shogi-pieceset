@@ -2,6 +2,10 @@
 
 Generate shogi piece images by compositing kanji characters onto wood textures with an engraved effect.
 
+![Piece samples](resources/spritesheet.png)
+
+*Low resolution preview. Run the generator for full 1500×1500px pieces.*
+
 ## Requirements
 
 - Python 3
